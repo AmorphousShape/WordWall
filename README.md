@@ -1,6 +1,6 @@
 # WordWall
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/AmorphousShape/wordwall/pkg/wordwall)](https://goreportcard.com/report/github.com/AmorphousShape/wordwall/pkg/wordwall)
+[![Go Report Card](https://goreportcard.com/badge/github.com/AmorphousShape/wordwall)](https://goreportcard.com/report/github.com/AmorphousShape/wordwall)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
 **WordWall** is a Go package and CLI tool for detecting and filtering zero-tolerance or banned language in strings. It includes support for obfuscated text (e.g., leetspeak, Greek letters, and other special characters).
