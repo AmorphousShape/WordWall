@@ -2,6 +2,7 @@ package internal
 
 import (
 	"regexp"
+	"sort"
 	"strings"
 	"unicode"
 )
@@ -56,6 +57,11 @@ func ObfuscatedRegex(word string) string {
 // It creates a regex for each word that allows for obfuscation and variations.
 // The response defines how the word should be handled (censored, filtered, or banned).
 func SetBannedWords(words []string, response Rule) {
+
+	sort.Slice(words, func(i, j int) bool {
+		return len(words[i]) < len(words[j]) // shortest to longest
+	})
+
 	BannedWords = make([]BannedWord, len(words))
 	for i, word := range words {
 		regex := ObfuscatedRegex(word)
