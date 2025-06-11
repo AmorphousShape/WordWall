@@ -68,3 +68,15 @@ func TestZeroTolerance(t *testing.T) {
 		}
 	}
 }
+
+func TestLengthSorting(t *testing.T) {
+	words := []string{"i", "like", "trains"}
+	wordwall.SetCensoredWords(words)
+
+	wordwall.FilterString("trains are cool i like them")
+
+	expectedOutput := "****** are cool * **** them"
+	if result, _, _, _ := wordwall.FilterString("trains are cool i like them"); result != expectedOutput {
+		t.Errorf("Expected '%s', got '%s'", expectedOutput, result)
+	}
+}

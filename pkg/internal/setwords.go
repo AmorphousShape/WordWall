@@ -58,8 +58,9 @@ func ObfuscatedRegex(word string) string {
 // The response defines how the word should be handled (censored, filtered, or banned).
 func SetBannedWords(words []string, response Rule) {
 
+	// Sort words by length in descending order to ensure longer words are matched first
 	sort.Slice(words, func(i, j int) bool {
-		return len(words[i]) < len(words[j]) // shortest to longest
+		return len(words[i]) > len(words[j]) // longest to shortest
 	})
 
 	BannedWords = make([]BannedWord, len(words))
