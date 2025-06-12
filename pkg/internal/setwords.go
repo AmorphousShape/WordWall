@@ -28,13 +28,18 @@ func ObfuscatedRegex(word string) string {
 	var sb strings.Builder
 	sb.WriteString("(?i)") // Case-insensitive
 
-	for i, char := range word {
-		variants, ok := CharVariants[unicode.ToLower(char)]
+	const noise = ".{0,2}?" // Match up to 2 of ANY character, non-greedy
+
+	runes := []rune(word)
+	for i, char := range runes {
+		baseChar := unicode.ToLower(char)
+
+		variants, ok := CharVariants[baseChar]
 		if !ok {
 			variants = []string{string(char)}
 		}
 
-		// Group of variants (e.g., a|@|4)
+		// Character or variants group
 		sb.WriteString("(?:")
 		for j, v := range variants {
 			if j > 0 {
@@ -44,10 +49,12 @@ func ObfuscatedRegex(word string) string {
 		}
 		sb.WriteString(")")
 
-		// Between-character obfuscation only if not last character
-		if i < len(word)-1 {
-			sb.WriteString("[\\s._\\-~']*")
+		// Add noise after the character if not the last
+		if i < len(runes)-1 && i > 0 {
+			sb.WriteString(noise)
 		}
+
+		sb.WriteString("[^\\s]*")
 	}
 
 	return sb.String()

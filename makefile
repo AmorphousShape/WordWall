@@ -1,5 +1,5 @@
-MAIN_PACKAGE_PATH := ./examples
-BINARY_NAME=example
+MAIN_PACKAGE_PATH := 
+BINARY_NAME = 
 
 ## help: print this help message
 help:

@@ -2,6 +2,7 @@ package wordwall
 
 import (
 	"strings"
+	"unicode"
 
 	"github.com/AmorphousShape/wordwall/pkg/internal"
 )
@@ -33,9 +34,18 @@ func FilterString(message string) (newMessage string, hitCensor bool, hitFilter 
 			switch bw.Response {
 			case internal.RuleCensor:
 				hitCensor = true
+
 				// Replace banned word with asterisks or a marker
 				newMessage = bw.Regex.ReplaceAllStringFunc(newMessage, func(matched string) string {
-					return strings.Repeat("*", len([]rune(matched)))
+					var sb strings.Builder
+					for _, i := range matched {
+						if unicode.IsSpace(i) {
+							sb.WriteRune(i) // Preserve spaces and punctuation
+						} else {
+							sb.WriteRune('*') // Replace letters with asterisks
+						}
+					}
+					return sb.String()
 				})
 
 			// Filtered words cause the message to be empty

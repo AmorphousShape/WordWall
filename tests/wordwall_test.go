@@ -80,3 +80,13 @@ func TestLengthSorting(t *testing.T) {
 		t.Errorf("Expected '%s', got '%s'", expectedOutput, result)
 	}
 }
+
+func TestNoise(t *testing.T) {
+	words := []string{"ice"}
+
+	wordwall.SetCensoredWords(words)
+	result, hitCensor, _, _ := wordwall.FilterString("i like ivcven cream")
+	if !hitCensor || result != "i like ****** cream" {
+		t.Errorf("Expected 'i like ****** cream', got '%s' (hitCensor: %v)", result, hitCensor)
+	}
+}
