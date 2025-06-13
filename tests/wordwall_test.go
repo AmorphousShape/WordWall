@@ -37,7 +37,7 @@ func TestFilter(t *testing.T) {
 	}{
 		{"This should f1lt3rme out.", "", true},
 		{"1gn0r3 tH1s message.", "", true},
-		{"No filtering here.", "No filtering here.", false},
+		{"Not going to be filtered.", "Not going to be filtered.", false},
 	}
 
 	for _, test := range tests {
@@ -70,13 +70,13 @@ func TestZeroTolerance(t *testing.T) {
 }
 
 func TestLengthSorting(t *testing.T) {
-	words := []string{"i", "like", "trains"}
+	words := []string{"we", "like", "trains"}
 	wordwall.SetCensoredWords(words)
 
-	wordwall.FilterString("trains are cool i like them")
+	wordwall.FilterString("trains are cool we like them")
 
-	expectedOutput := "****** are cool * **** them"
-	if result, _, _, _ := wordwall.FilterString("trains are cool i like them"); result != expectedOutput {
+	expectedOutput := "****** are cool ** **** them"
+	if result, _, _, _ := wordwall.FilterString("trains are cool we like them"); result != expectedOutput {
 		t.Errorf("Expected '%s', got '%s'", expectedOutput, result)
 	}
 }

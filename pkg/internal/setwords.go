@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"fmt"
 	"regexp"
 	"sort"
 	"strings"
@@ -56,6 +57,8 @@ func ObfuscatedRegex(word string) string {
 
 		sb.WriteString("[^\\s]*")
 	}
+
+	fmt.Println("Generated regex for word:", word, "is", sb.String())
 
 	return sb.String()
 }
